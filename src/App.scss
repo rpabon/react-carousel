@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  border: 1px solid gray;
+}
+
+.innerWrapper {
+  display: flex;
+}
+
+.slide {
+  border: 1px solid lightblue;
+  display: flex;
+  justify-content: center;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.3s ease-in;
+}
