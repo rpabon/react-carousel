@@ -3,11 +3,12 @@ import { useCarousel } from './useCarousel';
 
 export function Carousel({ items }: CarouselProps) {
   const uc = useCarousel(items.length);
+  const wrapperWidth = uc.width * items.length;
 
   return (
     <>
-      <div className="wrapper" ref={uc.wrapperRef}>
-        <div className="innerWrapper" style={{ width: uc.innerWrapperWidth }}>
+      <div className="wrapper" ref={uc.ref}>
+        <div className="innerWrapper" style={{ width: wrapperWidth }}>
           {items.map((item, i) => (
             <div key={i} className="slide" style={uc.currentSlideStyle}>
               {item}
@@ -15,13 +16,8 @@ export function Carousel({ items }: CarouselProps) {
           ))}
         </div>
       </div>
-      <p>active: {uc.currentIndex}</p>
-      <button disabled={uc.isFirstSlide} onClick={uc.prevSlide}>
-        prev
-      </button>
-      <button disabled={uc.isLastIndex} onClick={uc.nextSlide}>
-        next
-      </button>
+      <button onClick={uc.prevSlide}>prev</button>
+      <button onClick={uc.nextSlide}>next</button>
     </>
   );
 }
