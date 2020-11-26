@@ -1,13 +1,22 @@
-import { useEffect, useState, useRef, CSSProperties } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
-export function useCarousel(itemsLength: number) {
+export function useCarousel(items: JSX.Element[], multi?: boolean) {
   const ref = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(0);
+  const [wrapperWidth, setWrapperWidth] = useState(0);
+  const [widthList, setWidthList] = useState<number[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const lastIndex = items.length - 1;
 
   function handleResize() {
-    const width = ref.current?.offsetWidth;
-    if (width) setWidth(width);
+    const width = ref.current?.getBoundingClientRect().width || 0;
+    setWrapperWidth(width);
+
+    const list: number[] = [];
+    ref.current?.querySelectorAll('.slide').forEach((slide) => {
+      list.push(slide.getBoundingClientRect().width);
+    });
+    setWidthList(list);
+
     setCurrentIndex(0);
   }
 
@@ -18,21 +27,16 @@ export function useCarousel(itemsLength: number) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const currentSlideStyle: CSSProperties = {
-    width,
-    transform: `translate3d(-${currentIndex * width}px, 0, 0)`,
-  };
-
   return {
     ref,
-    width,
+    wrapperWidth,
+    widthList,
     currentIndex,
-    currentSlideStyle,
     prevSlide() {
-      setCurrentIndex(currentIndex === 0 ? itemsLength - 1 : currentIndex - 1);
+      setCurrentIndex(currentIndex === 0 ? lastIndex : currentIndex - 1);
     },
     nextSlide() {
-      setCurrentIndex(currentIndex === itemsLength - 1 ? 0 : currentIndex + 1);
+      setCurrentIndex(currentIndex === lastIndex ? 0 : currentIndex + 1);
     },
   };
 }
