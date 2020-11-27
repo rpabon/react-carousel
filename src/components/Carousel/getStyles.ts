@@ -1,6 +1,13 @@
 import { CSSProperties } from 'react';
 import { useCarousel } from './useCarousel';
 
+export function getSlideStyles(
+  { wrapperWidth }: ReturnType<typeof useCarousel>,
+  multi?: boolean
+): CSSProperties {
+  return { width: multi ? 'auto' : wrapperWidth };
+}
+
 export function getInnerWrapperStyles(
   {
     slideWidthList,

@@ -1,12 +1,14 @@
 @import '~modern-normalize/modern-normalize.css';
 
 .container {
+  position: relative;
   display: flex;
   align-content: center;
   margin: 40px auto;
 }
 
 .wrapper {
+  width: 100%;
   overflow: hidden;
   border: 1px solid gray;
 }
@@ -18,7 +20,6 @@
 }
 
 .slide {
-  border: 1px solid lightblue;
   display: flex;
   justify-content: center;
 
@@ -40,4 +41,14 @@ button {
   &.left {
     transform: rotate(180deg);
   }
+}
+
+.slide-indicator {
+  position: absolute;
+  top: 4px;
+  right: 52px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  background-color: #333;
+  color: #fff;
 }

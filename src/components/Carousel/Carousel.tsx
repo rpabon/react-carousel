@@ -1,35 +1,30 @@
 import { useCarousel } from './useCarousel';
-import { getInnerWrapperStyles } from './getInnerWrapperStyles';
-import chevron from './img/right-chevron.svg';
+import { getInnerWrapperStyles, getSlideStyles } from './getStyles';
+import { Button } from '../Button/Button';
+import { SlideIndicator } from '../SlideIndicator/SlideIndicator';
 
 export function Carousel({ children, multi }: CarouselProps) {
   const items = Array.isArray(children) ? children : [children];
   const uc = useCarousel(items);
   const innerWrapperStyles = getInnerWrapperStyles(uc, multi);
+  const slideStyles = getSlideStyles(uc, multi);
 
   return (
     <div className="container">
-      <button onClick={uc.prevSlide}>
-        <img alt="left chevron" src={chevron} className="chevron left" />
-      </button>
+      <Button onClick={uc.prevSlide} left />
 
       <div className="wrapper" ref={uc.wrapperRef}>
         <div className="innerWrapper" style={innerWrapperStyles}>
           {items.map((item, i) => (
-            <div
-              key={i}
-              className="slide"
-              style={{ width: multi ? 'auto' : uc.wrapperWidth }}
-            >
+            <div key={i} className="slide" style={slideStyles}>
               {item}
             </div>
           ))}
         </div>
       </div>
 
-      <button onClick={uc.nextSlide}>
-        <img alt="right chevron" src={chevron} className="chevron" />
-      </button>
+      <Button onClick={uc.nextSlide} />
+      <SlideIndicator current={uc.currentIndex} total={items.length} />
     </div>
   );
 }
