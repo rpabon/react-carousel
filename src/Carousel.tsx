@@ -1,5 +1,6 @@
 import { useCarousel } from './useCarousel';
 import { getInnerWrapperStyles } from './getInnerWrapperStyles';
+import chevron from './img/right-chevron.svg';
 
 export function Carousel({ children, multi }: CarouselProps) {
   const items = Array.isArray(children) ? children : [children];
@@ -7,7 +8,11 @@ export function Carousel({ children, multi }: CarouselProps) {
   const innerWrapperStyles = getInnerWrapperStyles(uc, multi);
 
   return (
-    <>
+    <div className="container">
+      <button onClick={uc.prevSlide}>
+        <img alt="left chevron" src={chevron} className="chevron left" />
+      </button>
+
       <div className="wrapper" ref={uc.wrapperRef}>
         <div className="innerWrapper" style={innerWrapperStyles}>
           {items.map((item, i) => (
@@ -21,9 +26,11 @@ export function Carousel({ children, multi }: CarouselProps) {
           ))}
         </div>
       </div>
-      <button onClick={uc.prevSlide}>prev</button>
-      <button onClick={uc.nextSlide}>next</button>
-    </>
+
+      <button onClick={uc.nextSlide}>
+        <img alt="right chevron" src={chevron} className="chevron" />
+      </button>
+    </div>
   );
 }
 

@@ -9,21 +9,24 @@ function App() {
   return (
     <>
       <Carousel>
-        {/* <img src={i150} />
-        <img src={i240} />
-        <img src={i350} />
-        <img src={i150} />
-        <img src={i240} />
-        <img src={i350} />
-        <img src={i150} />
-        <img src={i240} />
-        <img src={i350} /> */}
         <h1>1</h1>
         <h1>2</h1>
         <h1>3</h1>
         <h1>4</h1>
         <h1>5</h1>
         <h1>6</h1>
+      </Carousel>
+
+      <Carousel multi>
+        <img src={i150} />
+        <img src={i240} />
+        <img src={i350} />
+        <img src={i150} />
+        <img src={i240} />
+        <img src={i350} />
+        <img src={i150} />
+        <img src={i240} />
+        <img src={i350} />
       </Carousel>
     </>
   );

@@ -22,7 +22,9 @@ export function getInnerWrapperStyles(
   return getStyles(wrapperWidth * currentIndex, innerWrapperWidth);
 }
 
-function getTotalWidthFromIndex(slideWidthList: number[], index = 0) {
+function getTotalWidthFromIndex(slideWidthList: number[], i?: number) {
+  const index = i || slideWidthList.length;
+
   return slideWidthList.slice(0, index).reduce((acc, width) => acc + width, 0);
 }
 
