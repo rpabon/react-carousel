@@ -1,24 +1,26 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useReducer, useCallback } from 'react';
+import { carouselReducer, getInitialState } from './carouselReducer';
 
-export function useCarousel(items: JSX.Element[], multi?: boolean) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [wrapperWidth, setWrapperWidth] = useState(0);
-  const [widthList, setWidthList] = useState<number[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+export function useCarousel(items: JSX.Element[]) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [state, dispatch] = useReducer(carouselReducer, getInitialState());
+  const { wrapperWidth, slideWidthList, currentIndex } = state;
   const lastIndex = items.length - 1;
 
-  function handleResize() {
-    const width = ref.current?.getBoundingClientRect().width || 0;
-    setWrapperWidth(width);
-
-    const list: number[] = [];
-    ref.current?.querySelectorAll('.slide').forEach((slide) => {
-      list.push(slide.getBoundingClientRect().width);
+  const handleResize = useCallback(() => {
+    const wrapperWidth = wrapperRef.current?.getBoundingClientRect().width || 0;
+    const slideWidthList: number[] = [];
+    wrapperRef.current?.querySelectorAll('.slide').forEach((slide) => {
+      slideWidthList.push(slide.getBoundingClientRect().width);
     });
-    setWidthList(list);
 
-    setCurrentIndex(0);
-  }
+    dispatch({
+      type: 'SET_ALL_STATE',
+      wrapperWidth,
+      slideWidthList,
+      currentIndex: 0,
+    });
+  }, []);
 
   useEffect(() => {
     handleResize();
@@ -28,15 +30,24 @@ export function useCarousel(items: JSX.Element[], multi?: boolean) {
   }, []);
 
   return {
-    ref,
+    wrapperRef,
     wrapperWidth,
-    widthList,
+    slideWidthList,
     currentIndex,
+    get innerWrapperWidth() {
+      return wrapperWidth * items.length;
+    },
     prevSlide() {
-      setCurrentIndex(currentIndex === 0 ? lastIndex : currentIndex - 1);
+      dispatch({
+        type: 'SET_CURRENT_INDEX',
+        currentIndex: currentIndex === 0 ? lastIndex : currentIndex - 1,
+      });
     },
     nextSlide() {
-      setCurrentIndex(currentIndex === lastIndex ? 0 : currentIndex + 1);
+      dispatch({
+        type: 'SET_CURRENT_INDEX',
+        currentIndex: currentIndex === lastIndex ? 0 : currentIndex + 1,
+      });
     },
   };
 }
