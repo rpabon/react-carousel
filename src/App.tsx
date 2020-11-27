@@ -17,16 +17,28 @@ function App() {
         <h1>6</h1>
       </Carousel>
 
+      <Carousel>
+        <img src={i150} alt="i150" />
+        <img src={i240} alt="i240" />
+        <img src={i350} alt="i350" />
+        <img src={i150} alt="i150" />
+        <img src={i240} alt="i240" />
+        <img src={i350} alt="i350" />
+        <img src={i150} alt="i150" />
+        <img src={i240} alt="i240" />
+        <img src={i350} alt="i350" />
+      </Carousel>
+
       <Carousel multi>
-        <img src={i150} />
-        <img src={i240} />
-        <img src={i350} />
-        <img src={i150} />
-        <img src={i240} />
-        <img src={i350} />
-        <img src={i150} />
-        <img src={i240} />
-        <img src={i350} />
+        <img src={i150} alt="i150" />
+        <img src={i240} alt="i240" />
+        <img src={i350} alt="i350" />
+        <img src={i150} alt="i150" />
+        <img src={i240} alt="i240" />
+        <img src={i350} alt="i350" />
+        <img src={i150} alt="i150" />
+        <img src={i240} alt="i240" />
+        <img src={i350} alt="i350" />
       </Carousel>
     </>
   );
